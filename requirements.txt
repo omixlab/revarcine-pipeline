@@ -1,0 +1,10 @@
+numpy
+keras
+gdown
+pandas
+biopython
+streamlit
+tensorflow
+scikit-learn
+keras-preprocessing
+gdown

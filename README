@@ -1,0 +1,5 @@
+
+
+```
+python revarcine.py data.fasta 'G+' '110'
+```
