@@ -56,8 +56,7 @@ def revarcine(PARAMS):
     # Import the input (.fasta file) and Run pre-processing
     try:
         path  = 'data/input/' + INPUT_NAME
-        fasta = [line.strip('\n') for line in open(path)]
-
+        fasta = open(path)
         try:
             df_pre = pre_processing(fasta)
 

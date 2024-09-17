@@ -1,3 +1,4 @@
+from Bio import SeqIO
 import re
 import os
 import subprocess
@@ -35,11 +36,13 @@ def pre_processing(fasta):
             print(f"Erro ao executar o comando: {e}")  
     
     # Preparing the data.fasta
+
+    records = list(SeqIO.parse(fasta, 'fasta'))
     
     df             = pd.DataFrame(columns=['id', 'sequence'])
     regex          = re.compile('>')
-    sequence_id    = [ s for s in fasta if regex.match(s) ]
-    sequence       = [value for value in fasta if '>' not in value and value != '']
+    sequence_id    = [record.id for record in records]
+    sequence       = [str(record.seq) for record in records]
     # Convert all strings to lowercase
     sequence = [s.lower() for s in sequence]
     # Add a space between each character of the strings
