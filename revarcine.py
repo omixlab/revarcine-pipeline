@@ -31,16 +31,16 @@ def revarcine(PARAMS):
     ARGPRED     = PARAMS[2] # 100 -- Analysis combination --> Default: All Analysis -> check the documentation
 
     models_gp   = ['spp','cgp', 'scp']
-    models_gn   = ['spgn','cgn', 'scn', 'bbn']
+    models_gn   = ['spgn','cgn', 'scn', 'bbn', 'ahn']
     list_inter  = list()
     analysis    = list()
     results     = list()
     argms       = ARGPRED
     select_gram = INPUT_GRAM
-    LIMITE      = 4
+    LIMITE      = 5
     
 
-    if argms in ('000', '0000'):
+    if argms in ('000', '00000'):
         print('Warning !')
         print(f'You did not selected any analysis, the scirpt is in Default Mode: {argms}')
         sys.exit()
@@ -82,7 +82,7 @@ def revarcine(PARAMS):
 
             except Exception as exp:
                 print(exp)
-                print("Unable to execute cgp")
+                print("Unable to execute Signal Peptide Cut Position model")
                 sys.exit()
             return sgp_result
         
@@ -92,7 +92,7 @@ def revarcine(PARAMS):
                 
             except Exception as exp:
                 print(exp)
-                print("unable to execute scp")
+                print("unable to execute Subcellular Location model")
                 sys.exit()
             return scp_result
         
@@ -102,7 +102,7 @@ def revarcine(PARAMS):
 
             except Exception as exp:
                 print(exp)
-                print("Unable to execute spp")
+                print("Unable to execute Signal Peptide model")
                 sys.exit()
             return spp_result
         
@@ -115,7 +115,7 @@ def revarcine(PARAMS):
                 
             except Exception as exp:
                 print(exp)
-                print("unable to execute cgn")
+                print("unable to execute Signal Peptide Cut Position model")
                 sys.exit()
             return cgn_result
         
@@ -125,7 +125,7 @@ def revarcine(PARAMS):
 
             except Exception as exp:
                 print(exp)
-                print("Unable to execute scn")
+                print("Unable to execute Subcellular Location model")
                 sys.exit()
             return scn_result
         
@@ -135,7 +135,7 @@ def revarcine(PARAMS):
                 
             except Exception as exp:
                 print(exp)
-                print("unable to execute spgn")
+                print("unable to execute Signal Peptide model")
                 sys.exit()
             return spn_result
 
@@ -145,9 +145,19 @@ def revarcine(PARAMS):
                 
             except Exception as exp:
                 print(exp)
-                print("unable to execute bbn")
+                print("unable to execute Beta Berral model")
                 sys.exit()
             return bbn_result
+            
+        def ahn(df):
+            try:
+                ahn_result = models.ahn(df)
+                
+            except Exception as exp:
+                print(exp)
+                print("unable to execute Alpha Helix model")
+                sys.exit()
+            return ahn_result
         
     
     # Split the args in a list
@@ -180,7 +190,7 @@ def revarcine(PARAMS):
             # Going through each sequence and execute the models
             for k in analysis:
                 
-                print(f'\nÉ o modelo: {k} que está sendo processado') 
+                print(f'\nThe model {k} is processing') 
                 out_model = getattr(Revar_Pos, k)
                 # Check point for the result
                 if callable(out_model):
@@ -192,7 +202,7 @@ def revarcine(PARAMS):
             # Processing each smaller DataFrame
             for k in analysis:
                 print('\n')
-                print(f'É o modelo: {k} que está sendo processado')              
+                print(f'The model {k} is processing')              
                 out_model = getattr(Revar_Neg, k)
                 if callable(out_model):
                     results.append(out_model(df_pre))
@@ -201,7 +211,7 @@ def revarcine(PARAMS):
             #print(results)
         else:
             print("Please provide the right gram classification")
-            print("Remember that for +G, the sequency must have only three positions and four for G-. Eg: 101,1001")
+            print("Remember that for +G, the sequency must have only three positions and five for G-. Eg: 101,10001")
             sys.exit()
     
     # Pos-processing the result

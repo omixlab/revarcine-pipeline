@@ -172,7 +172,7 @@ class models():
         predict = predict >= 0.5
         return predict.tolist()
 
-    def bbn(df): # gram negatibe beta barrel function model
+    def bbn(df): # gram negative beta barrel function model
         
         model = keras.models.load_model(
             "exe/model/bbn.keras", custom_objects={"TransformerBlock": TransformerBlock}
@@ -182,6 +182,27 @@ class models():
             tokenizer = pickle.loads(reader.read()) # Loading tokenizer
 
         SEQUENCE_SIZE  = 1000
+
+        # tokenizer
+        sequences = tokenizer.texts_to_sequences(df['sequence'])
+        x         = pad_sequences(sequences, maxlen=SEQUENCE_SIZE, padding='post', truncating='post', value=0)
+
+        # predict
+        predict = model.predict(x) 
+        predict = predict >= 0.5
+        return predict.tolist()
+
+    def ahn(df): # gram negative alpha helix function model
+        
+        model = keras.models.load_model(
+            "exe/model/ahn.h5", custom_objects={"TransformerBlock": TransformerBlock}, compile=False
+            ) # Loading model
+        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+        with open('exe/tokenizer/ahn.pkl', 'rb') as reader:
+            tokenizer = pickle.loads(reader.read()) # Loading tokenizer
+
+        SEQUENCE_SIZE  = 3000
 
         # tokenizer
         sequences = tokenizer.texts_to_sequences(df['sequence'])

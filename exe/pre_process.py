@@ -23,7 +23,7 @@ def pre_processing(fasta):
     keras_files = [f for f in os.listdir(output_dir) if f.endswith('.keras')]
 
     if keras_files:
-        print(f"O diretório já contém arquivos .keras. Download não será necessário.\n")
+        print(f"The directory already contains .keras files. Downloading will not be necessary.\n")
     else:
         # Comando para baixar a pasta usando gdown
         command = ['gdown', '--folder', folder_url, '-O', output_dir]
@@ -31,9 +31,9 @@ def pre_processing(fasta):
         # Executa o comando
         try:
             subprocess.run(command, check=True)
-            print(f"Download concluído com sucesso. Arquivos salvos em: {output_dir}")
+            print(f"Download completed successfully. Files saved in: {output_dir}")
         except subprocess.CalledProcessError as e:
-            print(f"Erro ao executar o comando: {e}")  
+            print(f"Error executing command: {e}")  
     
     # Preparing the data.fasta
 

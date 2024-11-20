@@ -6,5 +6,6 @@ dependencies:
     - python=3.8
     - pip
     - jupyter
+    - tensorflow=2.13
     - pip:
       - -r requirements.txt
